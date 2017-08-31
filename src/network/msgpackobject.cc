@@ -440,8 +440,8 @@ std::shared_ptr<MsgpackObject> toMsgpackObject(
 
 template <>
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<std::vector<uint8_t>>& val) {
-  return std::make_shared<MsgpackObject>(val);
+    const std::shared_ptr<std::vector<uint8_t>>& val_ptr) {
+  return std::make_shared<MsgpackObject>(val_ptr);
 }
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(const MsgpackObject& obj) {
@@ -494,7 +494,9 @@ std::shared_ptr<MsgpackObject> toMsgpackObject(
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(
     const std::shared_ptr<proto::VelesException>& val) {
-  if (val == nullptr) return nullptr;
+  if (val == nullptr) {
+    return nullptr;
+  }
   std::map<std::string, std::shared_ptr<MsgpackObject>> m{
       {"type", toMsgpackObject(val->code)},
       {"message", toMsgpackObject(val->msg)},
@@ -527,7 +529,7 @@ void fromMsgpackObject(const std::shared_ptr<MsgpackObject>& obj,
   if (data->size() < 4) {
     throw proto::SchemaError("Not enough data for BinData unpack");
   }
-  uint32_t width = util::bytesToIntLe<uint32_t>(data->data(), 4);
+  auto width = util::bytesToIntLe<uint32_t>(data->data(), 4);
   size_t size = (data->size() - 4) / data::BinData(width, 0).octetsPerElement();
   *out = std::make_shared<data::BinData>(width, size, &data->data()[4]);
 }

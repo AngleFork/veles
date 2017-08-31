@@ -34,7 +34,7 @@ class FileBlobModel : public QAbstractItemModel {
   Q_OBJECT
 
  public:
-  explicit FileBlobModel(const dbif::ObjectHandle& fileBlob_,
+  explicit FileBlobModel(const dbif::ObjectHandle& fileBlob,
                          const QStringList& path = {},
                          QObject* parent = nullptr);
 

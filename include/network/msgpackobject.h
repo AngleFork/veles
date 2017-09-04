@@ -242,11 +242,11 @@ std::shared_ptr<MsgpackObject> toMsgpackObject(double val);
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(const data::NodeID& val);
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<data::NodeID>& val);
+    const std::shared_ptr<data::NodeID>& val_ptr);
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<data::BinData>& val);
+    const std::shared_ptr<data::BinData>& val_ptr);
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<proto::VelesException>& val);
+    const std::shared_ptr<proto::VelesException>& val_ptr);
 
 namespace details_ {
 

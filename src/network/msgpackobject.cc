@@ -479,32 +479,33 @@ std::shared_ptr<MsgpackObject> toMsgpackObject(const data::NodeID& val) {
 }
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<data::NodeID>& val) {
-  return details_::convertNodeIDHelper(*val);
+    const std::shared_ptr<data::NodeID>& val_ptr) {
+  return details_::convertNodeIDHelper(*val_ptr);
 }
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<data::BinData>& val) {
+    const std::shared_ptr<data::BinData>& val_ptr) {
   auto data = std::make_shared<std::vector<uint8_t>>(4, 0);
-  util::intToBytesLe(val->width(), 4, data->data());
-  data->insert(data->end(), val->rawData(), val->rawData() + val->octets());
+  util::intToBytesLe(val_ptr->width(), 4, data->data());
+  data->insert(data->end(), val_ptr->rawData(),
+               val_ptr->rawData() + val_ptr->octets());
   return std::make_shared<MsgpackObject>(static_cast<int>(proto::EXT_BINDATA),
                                          data);
 }
 
 std::shared_ptr<MsgpackObject> toMsgpackObject(
-    const std::shared_ptr<proto::VelesException>& val) {
-  if (val == nullptr) {
+    const std::shared_ptr<proto::VelesException>& val_ptr) {
+  if (val_ptr == nullptr) {
     return nullptr;
   }
   std::map<std::string, std::shared_ptr<MsgpackObject>> m{
-      {"type", toMsgpackObject(val->code)},
-      {"message", toMsgpackObject(val->msg)},
+      {"type", toMsgpackObject(val_ptr->code)},
+      {"message", toMsgpackObject(val_ptr->msg)},
   };
   return std::make_shared<MsgpackObject>(m);
 }
 
-std::shared_ptr<MsgpackObject> toMsgpackObject(const double val) {
+std::shared_ptr<MsgpackObject> toMsgpackObject(double val) {
   return std::make_shared<MsgpackObject>(val);
 }
 

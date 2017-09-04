@@ -186,12 +186,12 @@ QModelIndex FileBlobModel::index(int row, int column,
   return createIndex(row, column, itemFromIndex(parent));
 }
 
-QModelIndex FileBlobModel::parent(const QModelIndex& child) const {
-  if (!child.isValid()) {
+QModelIndex FileBlobModel::parent(const QModelIndex& child_index) const {
+  if (!child_index.isValid()) {
     return {};
   }
 
-  auto* loader = reinterpret_cast<FileBlobItem*>(child.internalPointer());
+  auto* loader = reinterpret_cast<FileBlobItem*>(child_index.internalPointer());
   return indexFromItem(loader);
 }
 

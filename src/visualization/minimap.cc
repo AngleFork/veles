@@ -357,14 +357,14 @@ void VisualizationMinimap::initTextures() {
   texture_->allocateStorage();
 
   point_size_ = std::max(1.0, static_cast<double>(sample_size_) / texture_size);
-  auto* rowdata = reinterpret_cast<const uint8_t*>(sampler_->data());
+  auto* row_data = reinterpret_cast<const uint8_t*>(sampler_->data());
 
   float* bigtab;
   if (mode_ == MinimapMode::VALUE) {
-    bigtab = calculateAverageValueTexture(rowdata, sample_size_, texture_size,
+    bigtab = calculateAverageValueTexture(row_data, sample_size_, texture_size,
                                           point_size_);
   } else {
-    bigtab = calculateEntropyTexture(rowdata, sample_size_, texture_size,
+    bigtab = calculateEntropyTexture(row_data, sample_size_, texture_size,
                                      point_size_);
   }
 
